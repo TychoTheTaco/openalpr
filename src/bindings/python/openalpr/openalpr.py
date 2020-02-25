@@ -49,6 +49,7 @@ class Alpr:
             # Load the .dll for Windows and the .so for Unix-based
             if platform.system().lower().find("windows") != -1:
                 self._openalprpy_lib = ctypes.cdll.LoadLibrary("openalprpy.dll")
+                #
             elif platform.system().lower().find("darwin") != -1:
                 self._openalprpy_lib = ctypes.cdll.LoadLibrary("libopenalprpy.dylib")
             else:
