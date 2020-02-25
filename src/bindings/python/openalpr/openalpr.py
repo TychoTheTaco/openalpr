@@ -48,7 +48,7 @@ class Alpr:
         try:
             # Load the .dll for Windows and the .so for Unix-based
             if platform.system().lower().find("windows") != -1:
-                self._openalprpy_lib = ctypes.cdll.LoadLibrary("libopenalprpy.dll")
+                self._openalprpy_lib = ctypes.cdll.LoadLibrary("openalprpy.dll")
             elif platform.system().lower().find("darwin") != -1:
                 self._openalprpy_lib = ctypes.cdll.LoadLibrary("libopenalprpy.dylib")
             else:
@@ -57,7 +57,7 @@ class Alpr:
             nex = OSError("Unable to locate the OpenALPR library. Please make sure that OpenALPR is properly "
                           "installed on your system and that the libraries are in the appropriate paths.")
             if _PYTHON_3:
-                nex.__cause__ = e;
+                nex.__cause__ = e
             raise nex
 
         self._initialize_func = self._openalprpy_lib.initialize
@@ -87,7 +87,7 @@ class Alpr:
             array_1_uint8 = npct.ndpointer(dtype=np.uint8, ndim=1, flags='CONTIGUOUS')
             self._recognize_raw_image_func.argtypes = [
                 ctypes.c_void_p, array_1_uint8, ctypes.c_uint, ctypes.c_uint, ctypes.c_uint]
-        except ImportError:
+        except Exception:
             self._recognize_raw_image_func = None
 
         self._free_json_mem_func = self._openalprpy_lib.freeJsonMem
